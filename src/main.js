@@ -1,4 +1,6 @@
 /*
+- fix board position
+- add dots at position of board in 3d space
 - create shape clicking to place x's and o's
 - create 3d array to actually store the placement of x's and o's 
   - have a game checker function to determine whether there's a winner or loser
@@ -42,9 +44,8 @@ scene.add(gridHelper);
 const board = createBoard();
 scene.add(board);
 
-// rotate box
+// game logic
 function animate(time) {
-
   renderer.render(scene, camera);
 }
 
