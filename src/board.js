@@ -21,7 +21,36 @@ const points = [
   [new THREE.Vector3(-0.5, 3, 0.5), new THREE.Vector3(-0.5, 0, 0.5)]
 ];
 
-const balls = [];
+const ball_positions = [
+                        // first plane 
+                        {x: 1, y: 2.5, z: 1}, {x: 1, y: 2.5, z: 0}, {x: 1, y: 2.5, z: -1},
+                        {x: 1, y: 1.5, z: 1}, {x: 1, y: 1.5, z: 0}, {x: 1, y: 1.5, z: -1},
+                        {x: 1, y: 0.5, z: 1}, {x: 1, y: 0.5, z: 0}, {x: 1, y: 0.5, z: -1},
+
+                        // second plane 
+                        {x: 0, y: 2.5, z: 1}, {x: 0, y: 2.5, z: 0}, {x: 0, y: 2.5, z: -1},
+                        {x: 0, y: 1.5, z: 1}, {x: 0, y: 1.5, z: 0}, {x: 0, y: 1.5, z: -1},
+                        {x: 0, y: 0.5, z: 1}, {x: 0, y: 0.5, z: 0}, {x: 0, y: 0.5, z: -1},
+
+                        // third plane 
+                        {x: -1, y: 2.5, z: 1}, {x: -1, y: 2.5, z: 0}, {x: -1, y: 2.5, z: -1},
+                        {x: -1, y: 1.5, z: 1}, {x: -1, y: 1.5, z: 0}, {x: -1, y: 1.5, z: -1},
+                        {x: -1, y: 0.5, z: 1}, {x: -1, y: 0.5, z: 0}, {x: -1, y: 0.5, z: -1},
+                      ];
+
+function create_balls() {
+  const balls = [];
+
+  const geometry = new THREE.SphereGeometry(0.1, 32, 16);
+  const material = new THREE.MeshBasicMaterial({ color: 0xffffff });
+
+  for (let i = 0; i < 27; i++) {
+    balls.push(new THREE.Mesh(geometry, material));
+    balls[i].position.set(ball_positions[i].x, ball_positions[i].y, ball_positions[i].z);
+  }
+
+  return balls;
+}
 
 export function createBoard() {
   // create a group to hold all the lines into one object
@@ -36,6 +65,12 @@ export function createBoard() {
 
     // add line segment
     board.add(line);
+  }
+
+  let balls = create_balls();
+  
+  for (let ball of balls) {
+    board.add(ball);
   }
 
   return board;
