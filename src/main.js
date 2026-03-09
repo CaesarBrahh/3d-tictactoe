@@ -2,12 +2,11 @@
 - fix board position
 - add dots at position of board in 3d space
 - create shape clicking to place x's and o's
-- create 3d array to actually store the placement of x's and o's 
-  - have a game checker function to determine whether there's a winner or loser
 */
 import * as THREE from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 import { createBoard } from './board.js';
+import { is_winner, mod_board_matrix } from './logic.js';
 
 // initialize renderer
 const renderer = new THREE.WebGLRenderer();
@@ -33,7 +32,7 @@ const axesHelper = new THREE.AxesHelper(3); // 5 represents length of axis
 scene.add(axesHelper);
 
 // move camera
-camera.position.set(-1, 2, 2);
+camera.position.set(-10, 8, 0);
 orbit.update();
 
 // grid helper
@@ -44,9 +43,34 @@ scene.add(gridHelper);
 const board = createBoard();
 scene.add(board);
 
+// build board matrix
+let board_matrix = [[[null, null, null], [null, null, null], [null, null, null]],
+                    [[null, null, null], [null, null, null], [null, null, null]],
+                    [[null, null, null], [null, null, null], [null, null, null]]];
+
 // game logic
+let player = 'x';
 function animate(time) {
   renderer.render(scene, camera);
+
+  // player clicks (record x, y, z values)
+
+  // board matrix is modified
+  //mod_board_matrix(x, y, z, player, board_matrix);
+
+  // virtual board is modified
+
+  // check for winner
+  //is_winner(board_matrix);
+
+  // player is changed
+  /*
+  if (player == 'x') {
+    player = 'o';
+  } else {
+    player = 'x';
+  }
+  */
 }
 
 renderer.setAnimationLoop(animate);

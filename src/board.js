@@ -3,23 +3,25 @@ import * as THREE from 'three';
 // define points for line segments
 const points = [
   // first board
-  [new THREE.Vector3(-0.5, 1.5, 1), new THREE.Vector3(-0.5, -1.5, 1)],
-  [new THREE.Vector3(0.5, 1.5, 1), new THREE.Vector3(0.5, -1.5, 1)],
-  [new THREE.Vector3(-1.5, 0.5, 1), new THREE.Vector3(1.5, 0.5, 1)],
-  [new THREE.Vector3(-1.5, -0.5, 1), new THREE.Vector3(1.5, -0.5, 1)],
+  [new THREE.Vector3(-0.5, 1, 1.5), new THREE.Vector3(-0.5, 1, -1.5)],
+  [new THREE.Vector3(0.5, 1, 1.5), new THREE.Vector3(0.5, 1, -1.5)],
+  [new THREE.Vector3(-1.5, 1, 0.5), new THREE.Vector3(1.5, 1, 0.5)],
+  [new THREE.Vector3(-1.5, 1, -0.5), new THREE.Vector3(1.5, 1, -0.5)],
 
   // second board (z+1)
-  [new THREE.Vector3(-0.5, 1.5, 2), new THREE.Vector3(-0.5, -1.5, 2)],
-  [new THREE.Vector3(0.5, 1.5, 2), new THREE.Vector3(0.5, -1.5, 2)],
-  [new THREE.Vector3(-1.5, 0.5, 2), new THREE.Vector3(1.5, 0.5, 2)],
-  [new THREE.Vector3(-1.5, -0.5, 2), new THREE.Vector3(1.5, -0.5, 2)],
+  [new THREE.Vector3(-0.5, 2, 1.5), new THREE.Vector3(-0.5, 2, -1.5)],
+  [new THREE.Vector3(0.5, 2, 1.5), new THREE.Vector3(0.5, 2, -1.5)],
+  [new THREE.Vector3(-1.5, 2, 0.5), new THREE.Vector3(1.5, 2, 0.5)],
+  [new THREE.Vector3(-1.5, 2, -0.5), new THREE.Vector3(1.5, 2, -0.5)],
 
   // connections
-  [new THREE.Vector3(0.5, 0.5, 3), new THREE.Vector3(0.5, 0.5, 0)],
-  [new THREE.Vector3(0.5, -0.5, 3), new THREE.Vector3(0.5, -0.5, 0)],
-  [new THREE.Vector3(-0.5, -0.5, 3), new THREE.Vector3(-0.5, -0.5, 0)],
-  [new THREE.Vector3(-0.5, 0.5, 3), new THREE.Vector3(-0.5, 0.5, 0)]
+  [new THREE.Vector3(0.5, 3, 0.5), new THREE.Vector3(0.5, 0, 0.5)],
+  [new THREE.Vector3(0.5, 3, -0.5), new THREE.Vector3(0.5, 0, -0.5)],
+  [new THREE.Vector3(-0.5, 3, -0.5), new THREE.Vector3(-0.5, 0, -0.5)],
+  [new THREE.Vector3(-0.5, 3, 0.5), new THREE.Vector3(-0.5, 0, 0.5)]
 ];
+
+const balls = [];
 
 export function createBoard() {
   // create a group to hold all the lines into one object

@@ -1,9 +1,4 @@
-// 3x3x3 Matrix
-let board_matrix = [[[null, null, null], [null, null, null], [null, null, null]],
-                    [[null, null, null], [null, null, null], [null, null, null]],
-                    [[null, null, null], [null, null, null], [null, null, null]]];
-
-function is_winner(bm) {
+export function is_winner(bm) {
     for (let i = 0; i < 3; i++) {
         for (let j = 0; j < 3; j++) {
             // check z-axis
@@ -44,4 +39,8 @@ function is_winner(bm) {
     }
 
     return false;
+}
+
+export function mod_board_matrix(x, y, z, player, bm) {
+    bm[x][y][z] = player;
 }
