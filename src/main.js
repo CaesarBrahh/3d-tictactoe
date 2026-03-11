@@ -1,7 +1,6 @@
 /*
-- no repeat clicks on an already changed object
+aesthetics arc:
 - have clicks change balls into an x or o
-- check if winner
 */
 import * as THREE from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
