@@ -1,4 +1,22 @@
-body 
+body
 {
 	margin: 0;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+.wrap {
+	width: 500px;
+	height: 500px;
+	
+}
+
+#board {
+	width: 100%;
+	height: 100%;
+	border-radius: 12px;
+	box-shadow: 0 0 20px purple;
+	display: flex;
+	justify-content: center;
 }

@@ -1,6 +1,10 @@
 /*
 aesthetics arc:
+- make it look pretty
 - have clicks change balls into an x or o
+  - have them differentiate colors too
+- reposition camera
+- only allow "orbiting" in orbit controls, no zooming nor axial repositioning
 */
 import * as THREE from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
@@ -8,9 +12,12 @@ import { createBoard } from './board.js';
 import { changeObject } from './logic.js';
 
 // initialize renderer
-const renderer = new THREE.WebGLRenderer();
-renderer.setSize(window.innerWidth, window.innerHeight);
-document.body.appendChild(renderer.domElement);
+const canvas = document.querySelector('#board');
+const renderer = new THREE.WebGLRenderer({ 
+  canvas: canvas, 
+  antialias: true });
+const container = document.querySelector('.wrap');
+renderer.setSize(container.clientWidth, container.clientHeight);
 
 // initialize scene
 const scene = new THREE.Scene();
@@ -18,17 +25,14 @@ const scene = new THREE.Scene();
 // initialize camera
 const camera = new THREE.PerspectiveCamera(
   45, // field of view
-  window.innerWidth / window.innerHeight, // aspect ratio
+  container.clientWidth / container.clientHeight, // aspect ratio
   0.1, // near clipping plane
   1000 // far clipping plane
 );
+camera.updateProjectionMatrix();
 
 // initialize orbit controls
 const orbit = new OrbitControls(camera, renderer.domElement);
-
-// axes helper
-const axesHelper = new THREE.AxesHelper(3); // 5 represents length of axis
-scene.add(axesHelper);
 
 // move camera
 camera.position.set(-10, 8, 0);
@@ -84,8 +88,10 @@ function animate(time) {
 renderer.setAnimationLoop(animate);
 
 window.addEventListener('mousemove', (event) => {
-  mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
-  mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+  const rect = container.getBoundingClientRect();
+
+  mouse.x = ((event.clientX - rect.left) / rect.width) * 2 - 1;
+  mouse.y = -((event.clientY - rect.top) / rect.height) * 2 + 1;
 });
 
 window.addEventListener('click', () => gameState = changeObject(hoveredObject));
