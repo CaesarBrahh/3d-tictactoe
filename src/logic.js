@@ -1,10 +1,11 @@
 import * as THREE from 'three';
 
 // build board matrix
-let board_matrix = [[[null, null, null], [null, null, null], [null, null, null]],
+let boardMatrix = [[[null, null, null], [null, null, null], [null, null, null]],
                     [[null, null, null], [null, null, null], [null, null, null]],
                     [[null, null, null], [null, null, null], [null, null, null]]];
 
+// initialize player
 let player = 'x';
 
 function isWinner(bm) {
@@ -65,45 +66,71 @@ function map(x, y, z) {
 
     if (y == 2.5) {
         map_y = 0;
-    } else if (x == 1.5) {
+    } else if (y == 1.5) {
         map_y = 1;
     } else {
         map_y = 2;
     }
+
+    if (z == -1) {
+        map_z = 0;
+    } else if (z == 0) {
+        map_z = 1;
+    } else {
+        map_z = 2;
+    }
+
+    return { map_x, map_y, map_z };
 }
-
-// x = -1 --> 0; x = 0 --> 1; x = 1 --> 2
-
 
 export function changeObject(obj) {
     if (obj) {
-        if (player == 'x') {
-            obj.geometry.dispose();
-            obj.geometry = new THREE.BoxGeometry(0.1, 0.1, 0.1);
+        // find board position
+        const { map_x, map_y, map_z } = map(obj.position.x, obj.position.y, obj.position.z);
 
-            player = 'o';
-        } else {
-            obj.geometry.dispose();
-            obj.geometry = new THREE.ConeGeometry(0.1, 0.1, 32);
+        // only make changes if position is open
+        if (boardMatrix[map_x][map_y][map_z] == null) {
+            // change board matrix
+            boardMatrix[map_x][map_y][map_z] = player;
 
-            player = 'x';
+            // change geometry
+            obj.geometry.dispose();
+
+            if (player == 'x') {
+                obj.geometry = new THREE.BoxGeometry(0.1, 0.1, 0.1);
+
+                // switch players
+                player = 'o';
+            } else {
+                obj.geometry = new THREE.ConeGeometry(0.1, 0.1, 32);
+
+                // switch players
+                player = 'x';
+            }
+            
+            // testing
+            console.log(boardMatrix);
         }
-        
+
         // if (player == 'x') {
-        //     // change ball geometry
-        //     obj.geometry.dispose();
-        //     obj.geometry = new THREE.ConeGeometry(1, 1, 1);
+        //     // find board position
 
         //     // change board logic
+
+        //     // change geometry
+        //     obj.geometry.dispose();
+        //     obj.geometry = new THREE.BoxGeometry(0.1, 0.1, 0.1);
 
         //     // switch players
         //     player = 'o';
         // } else {
-        //     // change ball geometry
-        //     obj.geometry.dispose();
-        //     obj.geometry = new THREE.BoxGeometry(1, 1, 1);
+        //     // find board position
 
         //     // change board logic
+
+        //     // change geometry
+        //     obj.geometry.dispose();
+        //     obj.geometry = new THREE.ConeGeometry(0.1, 0.1, 32);
 
         //     // switch players
         //     player = 'x';
