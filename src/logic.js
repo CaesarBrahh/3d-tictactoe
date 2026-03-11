@@ -107,14 +107,9 @@ export function changeObject(obj) {
                 // switch players
                 player = 'x';
             }
-
-            // testing
-            console.log(boardMatrix);
-
-            // check if winner
-            if (isWinner()) {
-                console.log("dub");
-            }
+            
         }
     }
+    // check if winner
+    return !isWinner();
 }

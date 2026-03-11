@@ -48,32 +48,35 @@ const mouse = new THREE.Vector2();
 
 // gameplay
 let hoveredObject = null;
+let gameState = true;
 function animate(time) {
   renderer.render(scene, camera);
 
   // raycaster
-  raycaster.setFromCamera(mouse, camera);
-  const intersects = raycaster.intersectObjects(balls);
+  if (gameState) {
+    raycaster.setFromCamera(mouse, camera);
+    const intersects = raycaster.intersectObjects(balls);
 
-  if (intersects.length > 0) {
-    const obj = intersects[0].object;
+    if (intersects.length > 0) {
+      const obj = intersects[0].object;
 
-    if (hoveredObject !== obj) {
-      // change hoveredObject back to base object
+      if (hoveredObject !== obj) {
+        // change hoveredObject back to base object
+        if (hoveredObject) {
+          hoveredObject.material.color.set(0xffffff);
+        }
+
+        // change hoveredObject to current object
+        hoveredObject = obj;
+      } 
+
+      // change color of hovered object
+      hoveredObject.material.color.set(0xff0000);
+    } else {
       if (hoveredObject) {
         hoveredObject.material.color.set(0xffffff);
+        hoveredObject = null;
       }
-
-      // change hoveredObject to current object
-      hoveredObject = obj;
-    } 
-
-    // change color of hovered object
-    hoveredObject.material.color.set(0xff0000);
-  } else {
-    if (hoveredObject) {
-      hoveredObject.material.color.set(0xffffff);
-      hoveredObject = null;
     }
   }
 }
@@ -85,4 +88,4 @@ window.addEventListener('mousemove', (event) => {
   mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
 });
 
-window.addEventListener('click', () => changeObject(hoveredObject));
+window.addEventListener('click', () => gameState = changeObject(hoveredObject));
