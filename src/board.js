@@ -42,9 +42,10 @@ function create_balls() {
   const balls = [];
 
   const geometry = new THREE.SphereGeometry(0.1, 32, 16);
-  const material = new THREE.MeshBasicMaterial({ color: 0xffffff });
 
   for (let i = 0; i < 27; i++) {
+    const material = new THREE.MeshBasicMaterial({ color: 0xffffff });
+
     balls.push(new THREE.Mesh(geometry, material));
     balls[i].position.set(ball_positions[i].x, ball_positions[i].y, ball_positions[i].z);
   }
@@ -73,5 +74,5 @@ export function createBoard() {
     board.add(ball);
   }
 
-  return board;
+  return { board, balls };
 }

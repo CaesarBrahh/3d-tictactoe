@@ -1,7 +1,6 @@
 /*
-- fix board position
-- add dots at position of board in 3d space
-- create shape clicking to place x's and o's
+- have clicks be registered
+- have clicks change ball into an x or o
 */
 import * as THREE from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
@@ -40,7 +39,7 @@ const gridHelper = new THREE.GridHelper();
 scene.add(gridHelper);
 
 // add board
-const board = createBoard();
+const { board, balls } = createBoard();
 scene.add(board);
 
 // build board matrix
@@ -48,29 +47,45 @@ let board_matrix = [[[null, null, null], [null, null, null], [null, null, null]]
                     [[null, null, null], [null, null, null], [null, null, null]],
                     [[null, null, null], [null, null, null], [null, null, null]]];
 
+// raycaster
+const raycaster = new THREE.Raycaster();
+const mouse = new THREE.Vector2();
+
 // game logic
 let player = 'x';
+let hoveredObject = null;
 function animate(time) {
   renderer.render(scene, camera);
 
-  // player clicks (record x, y, z values)
+  // raycaster
+  raycaster.setFromCamera(mouse, camera);
+  const intersects = raycaster.intersectObjects(balls);
 
-  // board matrix is modified
-  //mod_board_matrix(x, y, z, player, board_matrix);
+  if (intersects.length > 0) {
+    const obj = intersects[0].object;
 
-  // virtual board is modified
+    if (hoveredObject !== obj) {
+      // change hoveredObject back to base object
+      if (hoveredObject) {
+        hoveredObject.material.color.set(0xffffff);
+      }
 
-  // check for winner
-  //is_winner(board_matrix);
+      // change hoveredObject to current object
+      hoveredObject = obj;
+    } 
 
-  // player is changed
-  /*
-  if (player == 'x') {
-    player = 'o';
+    // change color of hovered object
+    hoveredObject.material.color.set(0xff0000);
   } else {
-    player = 'x';
+    if (hoveredObject) {
+      hoveredObject.material.color.set(0xffffff);
+    }
   }
-  */
 }
 
 renderer.setAnimationLoop(animate);
+
+window.addEventListener('mousemove', (event) => {
+  mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+  mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+});
