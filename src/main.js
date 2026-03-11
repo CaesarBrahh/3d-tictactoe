@@ -1,11 +1,11 @@
 /*
-- have clicks be registered
-- have clicks change ball into an x or o
+- no repeat clicks on an already changed object
+- have clicks change balls into an x or o
 */
 import * as THREE from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 import { createBoard } from './board.js';
-import { is_winner, mod_board_matrix } from './logic.js';
+import { changeObject } from './logic.js';
 
 // initialize renderer
 const renderer = new THREE.WebGLRenderer();
@@ -42,17 +42,11 @@ scene.add(gridHelper);
 const { board, balls } = createBoard();
 scene.add(board);
 
-// build board matrix
-let board_matrix = [[[null, null, null], [null, null, null], [null, null, null]],
-                    [[null, null, null], [null, null, null], [null, null, null]],
-                    [[null, null, null], [null, null, null], [null, null, null]]];
-
-// raycaster
+// initialize raycaster
 const raycaster = new THREE.Raycaster();
 const mouse = new THREE.Vector2();
 
-// game logic
-let player = 'x';
+// gameplay
 let hoveredObject = null;
 function animate(time) {
   renderer.render(scene, camera);
@@ -79,6 +73,7 @@ function animate(time) {
   } else {
     if (hoveredObject) {
       hoveredObject.material.color.set(0xffffff);
+      hoveredObject = null;
     }
   }
 }
@@ -89,3 +84,5 @@ window.addEventListener('mousemove', (event) => {
   mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
   mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
 });
+
+window.addEventListener('click', () => changeObject(hoveredObject));

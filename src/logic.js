@@ -1,4 +1,13 @@
-export function is_winner(bm) {
+import * as THREE from 'three';
+
+// build board matrix
+let board_matrix = [[[null, null, null], [null, null, null], [null, null, null]],
+                    [[null, null, null], [null, null, null], [null, null, null]],
+                    [[null, null, null], [null, null, null], [null, null, null]]];
+
+let player = 'x';
+
+function isWinner(bm) {
     for (let i = 0; i < 3; i++) {
         for (let j = 0; j < 3; j++) {
             // check z-axis
@@ -41,6 +50,63 @@ export function is_winner(bm) {
     return false;
 }
 
-export function mod_board_matrix(x, y, z, player, bm) {
-    bm[x][y][z] = player;
+function map(x, y, z) {
+    let map_x = null;
+    let map_y = null;
+    let map_z = null;
+
+    if (x == -1) {
+        map_x = 0;
+    } else if (x == 0) {
+        map_x = 1;
+    } else {
+        map_x = 2;
+    }
+
+    if (y == 2.5) {
+        map_y = 0;
+    } else if (x == 1.5) {
+        map_y = 1;
+    } else {
+        map_y = 2;
+    }
+}
+
+// x = -1 --> 0; x = 0 --> 1; x = 1 --> 2
+
+
+export function changeObject(obj) {
+    if (obj) {
+        if (player == 'x') {
+            obj.geometry.dispose();
+            obj.geometry = new THREE.BoxGeometry(0.1, 0.1, 0.1);
+
+            player = 'o';
+        } else {
+            obj.geometry.dispose();
+            obj.geometry = new THREE.ConeGeometry(0.1, 0.1, 32);
+
+            player = 'x';
+        }
+        
+        // if (player == 'x') {
+        //     // change ball geometry
+        //     obj.geometry.dispose();
+        //     obj.geometry = new THREE.ConeGeometry(1, 1, 1);
+
+        //     // change board logic
+
+        //     // switch players
+        //     player = 'o';
+        // } else {
+        //     // change ball geometry
+        //     obj.geometry.dispose();
+        //     obj.geometry = new THREE.BoxGeometry(1, 1, 1);
+
+        //     // change board logic
+
+        //     // switch players
+        //     player = 'x';
+        // }
+    }
 }

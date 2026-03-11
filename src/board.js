@@ -41,9 +41,8 @@ const ball_positions = [
 function create_balls() {
   const balls = [];
 
-  const geometry = new THREE.SphereGeometry(0.1, 32, 16);
-
   for (let i = 0; i < 27; i++) {
+    const geometry = new THREE.SphereGeometry(0.1, 32, 16);
     const material = new THREE.MeshBasicMaterial({ color: 0xffffff });
 
     balls.push(new THREE.Mesh(geometry, material));
