@@ -6,7 +6,7 @@ let boardMatrix = [[[null, null, null], [null, null, null], [null, null, null]],
                     [[null, null, null], [null, null, null], [null, null, null]]];
 
 // initialize player
-let player = 'x';
+let player = 'X';
 
 function isWinner() {
     for (let i = 0; i < 3; i++) {
@@ -96,18 +96,20 @@ export function changeObject(obj) {
             // change geometry
             obj.geometry.dispose();
 
-            if (player == 'x') {
+            if (player == 'X') {
                 obj.geometry = new THREE.BoxGeometry(0.1, 0.1, 0.1);
 
                 // switch players
-                player = 'o';
+                player = 'O';
             } else {
                 obj.geometry = new THREE.ConeGeometry(0.1, 0.1, 32);
 
                 // switch players
-                player = 'x';
+                player = 'X';
             }
-            
+
+            // modify on-screen player display
+            document.getElementById("player").textContent = player;
         }
     }
     // check if winner

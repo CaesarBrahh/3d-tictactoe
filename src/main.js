@@ -1,6 +1,5 @@
 /*
 aesthetics arc:
-- modify player in ui to reflect actual player
 - have clicks change balls into an x or o
   - have them differentiate colors too
 - reposition camera
