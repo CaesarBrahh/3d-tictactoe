@@ -18,8 +18,8 @@ const canvas = document.querySelector('#board');
 const renderer = new THREE.WebGLRenderer({ 
   canvas: canvas, 
   antialias: true });
-const container = document.querySelector('.wrap');
-renderer.setSize(container.clientWidth, container.clientHeight);
+const rect = canvas.getBoundingClientRect();
+renderer.setSize(rect.width, rect.height, false);
 
 // initialize scene
 const scene = new THREE.Scene();
@@ -27,7 +27,7 @@ const scene = new THREE.Scene();
 // initialize camera
 const camera = new THREE.PerspectiveCamera(
   45, // field of view
-  container.clientWidth / container.clientHeight, // aspect ratio
+  rect.width / rect.height, // aspect ratio
   0.1, // near clipping plane
   1000 // far clipping plane
 );
@@ -90,7 +90,7 @@ function animate(time) {
 renderer.setAnimationLoop(animate);
 
 window.addEventListener('mousemove', (event) => {
-  const rect = container.getBoundingClientRect();
+  const rect = canvas.getBoundingClientRect();
 
   mouse.x = ((event.clientX - rect.left) / rect.width) * 2 - 1;
   mouse.y = -((event.clientY - rect.top) / rect.height) * 2 + 1;
