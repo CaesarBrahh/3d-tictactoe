@@ -90,22 +90,42 @@ h3 {
 	backdrop-filter: blur(10px);
 }
 
-#player {
-	color: #60a5fa;
-	animation: playerGlow 0.5s ease-in-out infinite alternate;
+.player-x {
+	color: #ef4444;
+	animation: glowX 0.5s ease-in-out infinite alternate;
 }
 
-@keyframes playerGlow {
+.player-o {
+	color: #22c55e;
+	animation: glowO 0.5s ease-in-out infinite alternate;
+}
+
+@keyframes glowX {
   from {
     text-shadow:
-      0 0 5px #60a5fa,
-      0 0 10px #60a5fa,
-      0 0 20px #3b82f6;
+      0 0 5px #ef4444,
+      0 0 10px #ef4444,
+      0 0 20px #dc2626;
   }
   to {
     text-shadow:
-      0 0 10px #60a5fa,
-      0 0 20px #60a5fa,
-      0 0 40px #3b82f6;
+      0 0 10px #ef4444,
+      0 0 20px #ef4444,
+      0 0 40px #dc2626;
+  }
+}
+
+@keyframes glowO {
+  from {
+    text-shadow:
+      0 0 5px #22c55e,
+      0 0 10px #22c55e,
+      0 0 20px #16a34a;
+  }
+  to {
+    text-shadow:
+      0 0 10px #22c55e,
+      0 0 20px #22c55e,
+      0 0 40px #16a34a;
   }
 }

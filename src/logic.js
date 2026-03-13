@@ -7,6 +7,33 @@ let boardMatrix = [[[null, null, null], [null, null, null], [null, null, null]],
 
 // initialize player
 let player = 'X';
+document.getElementById("player").className = "player-x";
+
+// build o and x pieces
+const pieces = {};
+
+// O piece
+pieces.o = new THREE.Mesh(
+    new THREE.TorusGeometry(0.4, 0.15, 16, 100), 
+    new THREE.MeshBasicMaterial({ color: 0x008000 })
+);
+pieces.o_geometry = new THREE.TorusGeometry(0.4, 0.15, 16, 100);
+
+// X piece
+const bar1 = new THREE.Mesh(
+    new THREE.BoxGeometry(0.8, 0.15, 0.15),
+    new THREE.MeshBasicMaterial({ color: 0xff0000 })
+);
+bar1.rotation.z = Math.PI / 4;
+
+const bar2 = bar1.clone();
+bar2.rotation.z = -Math.PI / 4;
+
+const xPiece = new THREE.Group();
+xPiece.add(bar1);
+xPiece.add(bar2);
+
+pieces.x = xPiece;
 
 function isWinner() {
     for (let i = 0; i < 3; i++) {
@@ -83,7 +110,19 @@ function map(x, y, z) {
     return { map_x, map_y, map_z };
 }
 
-export function changeObject(obj) {
+function updatePlayerUI(player) {
+    let playerSpan = document.getElementById("player");
+
+    playerSpan.textContent = player;
+
+    if (player == "X") {
+        playerSpan.className = "player-x";
+    } else {
+        playerSpan.className = "player-o";
+    }
+}
+
+export function changeObject(obj, board) {
     if (obj) {
         // find board position
         const { map_x, map_y, map_z } = map(obj.position.x, obj.position.y, obj.position.z);
@@ -97,19 +136,27 @@ export function changeObject(obj) {
             obj.geometry.dispose();
 
             if (player == 'X') {
-                obj.geometry = new THREE.BoxGeometry(0.1, 0.1, 0.1);
+                // replace piece
+                let replacementPiece = pieces.x.clone();
+                replacementPiece.position.copy(obj.position);
+                board.remove(obj);
+                board.add(replacementPiece);
 
                 // switch players
                 player = 'O';
             } else {
-                obj.geometry = new THREE.ConeGeometry(0.1, 0.1, 32);
+                // replace piece
+                let replacementPiece = pieces.o.clone();
+                replacementPiece.position.copy(obj.position);
+                board.remove(obj);
+                board.add(replacementPiece);
 
                 // switch players
                 player = 'X';
             }
 
             // modify on-screen player display
-            document.getElementById("player").textContent = player;
+            updatePlayerUI(player);
         }
     }
     // check if winner

@@ -21,8 +21,6 @@ const points = [
   [new THREE.Vector3(-0.5, 1.5, 0.5), new THREE.Vector3(-0.5, -1.5, 0.5)]
 ];
 
-// (0->-1.5), (1->-0.5), (2->0.5), (3->1.5)
-
 const ball_positions = [
                         // first plane 
                         {x: 1, y: 1, z: 1}, {x: 1, y: 1, z: 0}, {x: 1, y: 1, z: -1},

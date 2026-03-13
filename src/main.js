@@ -1,10 +1,8 @@
 /*
 aesthetics arc:
-- have clicks change balls into an x or o
-  - have them differentiate colors too
-    - further reflect this differentiation on the ui player span glow
+- apply missed isWinner() checks
 
-- add a glow around winning row when win is detected
+- add a golden glow around the winning objects
   - "play again" button
 
 - make threejs scene just overall more visible and pleasent to lay eyes on
@@ -77,7 +75,7 @@ function animate(time) {
       } 
 
       // change color of hovered object
-      hoveredObject.material.color.set(0xff0000);
+      hoveredObject.material.color.set(0x987ab4);
     } else {
       if (hoveredObject) {
         hoveredObject.material.color.set(0xffffff);
@@ -96,21 +94,4 @@ window.addEventListener('mousemove', (event) => {
   mouse.y = -((event.clientY - rect.top) / rect.height) * 2 + 1;
 });
 
-window.addEventListener('click', () => gameState = changeObject(hoveredObject));
-
-// let isDragging = false;
-
-// window.addEventListener('mousedown', () => {
-//   isDragging = true;
-// });
-
-// window.addEventListener('mouseup', () => {
-//   isDragging = false;
-// });
-
-// window.addEventListener('mousemove', (event) => {
-//   if (isDragging) {
-//     board.rotation.y += event.movementX * 0.005;
-//     board.rotation.x += event.movementY * 0.005;
-//   }
-// });
+window.addEventListener('click', () => gameState = changeObject(hoveredObject, board));
