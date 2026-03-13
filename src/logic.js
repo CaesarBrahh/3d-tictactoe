@@ -157,3 +157,8 @@ export function changeObject(obj, board) {
     // check if winner
     return !isWinner();
 }
+
+// restart
+document.getElementById("butt").addEventListener("click", () => {
+  location.reload();
+});

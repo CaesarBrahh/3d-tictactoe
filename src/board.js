@@ -36,7 +36,7 @@ const ball_positions = [
                         {x: -1, y: 1, z: 1}, {x: -1, y: 1, z: 0}, {x: -1, y: 1, z: -1},
                         {x: -1, y: 0, z: 1}, {x: -1, y: 0, z: 0}, {x: -1, y: 0, z: -1},
                         {x: -1, y: -1, z: 1}, {x: -1, y: -1, z: 0}, {x: -1, y: -1, z: -1},
-                      ];
+];
 
 function create_balls() {
   const balls = [];
@@ -76,7 +76,6 @@ export function createBoard() {
   return { board, balls };
 }
 
-// stars
 export function createStars() {
   const starCount = 10000;
   const positions = [];

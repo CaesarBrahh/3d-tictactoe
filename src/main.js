@@ -1,9 +1,9 @@
 /*
 aesthetics arc:
-- apply missed isWinner() checks
+- apply missed isWinner() checks (12 missing)
+  - apply top-down diagonals
 
 - add a golden glow around the winning objects
-  - "play again" button
 
 - mobile compatability
 
@@ -92,6 +92,9 @@ function animate(time) {
         hoveredObject = null;
       }
     }
+  } else {
+    document.getElementById("butt").style.display = "block";
+    document.getElementById("player-wrapper").style.display = "none";
   }
 }
 renderer.setPixelRatio(window.devicePixelRatio);
