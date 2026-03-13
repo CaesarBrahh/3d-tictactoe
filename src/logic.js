@@ -14,7 +14,7 @@ const pieces = {};
 
 // O piece
 pieces.o = new THREE.Mesh(
-    new THREE.TorusGeometry(0.4, 0.15, 16, 100), 
+    new THREE.TorusGeometry(0.3, 0.12, 16, 100), 
     new THREE.MeshBasicMaterial({ color: 0x008000 })
 );
 pieces.o_geometry = new THREE.TorusGeometry(0.4, 0.15, 16, 100);
@@ -135,25 +135,20 @@ export function changeObject(obj, board) {
             // change geometry
             obj.geometry.dispose();
 
+            // switch players
+            let replacementPiece;
             if (player == 'X') {
-                // replace piece
-                let replacementPiece = pieces.x.clone();
-                replacementPiece.position.copy(obj.position);
-                board.remove(obj);
-                board.add(replacementPiece);
-
-                // switch players
+                replacementPiece = pieces.x.clone();               
                 player = 'O';
             } else {
-                // replace piece
-                let replacementPiece = pieces.o.clone();
-                replacementPiece.position.copy(obj.position);
-                board.remove(obj);
-                board.add(replacementPiece);
-
-                // switch players
+                replacementPiece = pieces.o.clone()
                 player = 'X';
             }
+
+            // replace piece
+            replacementPiece.position.copy(obj.position);
+            board.remove(obj);
+            board.add(replacementPiece); 
 
             // modify on-screen player display
             updatePlayerUI(player);

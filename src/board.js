@@ -75,3 +75,36 @@ export function createBoard() {
 
   return { board, balls };
 }
+
+// stars
+export function createStars() {
+  const starCount = 10000;
+  const positions = [];
+
+  for (let i = 0; i < starCount; i++) {
+    let x = (Math.random() - 0.5) * 80;
+    let y = (Math.random() - 0.5) * 80;
+    let z = (Math.random() - 0.5) * 80;
+
+    while ((x >= -10 && x <= 10) && (y >= -10 && y <= 10) && (z >= -10 && z <= 10)) {
+      x = (Math.random() - 0.5) * 80;
+      y = (Math.random() - 0.5) * 80;
+      z = (Math.random() - 0.5) * 80;
+    }
+
+    positions.push(x, y, z);
+  }
+
+  const geometry = new THREE.BufferGeometry();
+  geometry.setAttribute(
+    'position',
+    new THREE.Float32BufferAttribute(positions, 3)
+  );
+
+  const material = new THREE.PointsMaterial({
+    color: 0xffffff,
+    size: 0.08
+  });
+
+  return new THREE.Points(geometry, material);
+}

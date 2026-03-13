@@ -5,11 +5,13 @@ aesthetics arc:
 - add a golden glow around the winning objects
   - "play again" button
 
-- make threejs scene just overall more visible and pleasent to lay eyes on
+- mobile compatability
+
+tower arc:
 */
 import * as THREE from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
-import { createBoard } from './board.js';
+import { createBoard, createStars } from './board.js';
 import { changeObject } from './logic.js';
 
 // initialize renderer
@@ -42,6 +44,11 @@ orbit.enablePan = false;
 camera.position.set(4, 4, 4);
 camera.lookAt(0, 0, 0);
 
+// add visual elements to scene
+scene.background = new THREE.Color(0x0f172a);
+const stars = createStars();
+scene.add(stars);
+
 // add board
 const { board, balls } = createBoard();
 scene.add(board);
@@ -55,6 +62,9 @@ let hoveredObject = null;
 let gameState = true;
 function animate(time) {
   renderer.render(scene, camera);
+
+  // rotate stars and board
+  stars.rotation.y += 0.0005;
 
   // raycaster
   if (gameState) {
@@ -84,7 +94,7 @@ function animate(time) {
     }
   }
 }
-
+renderer.setPixelRatio(window.devicePixelRatio);
 renderer.setAnimationLoop(animate);
 
 window.addEventListener('mousemove', (event) => {
