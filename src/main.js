@@ -2,10 +2,12 @@
 aesthetics arc:
 - have clicks change balls into an x or o
   - have them differentiate colors too
-- reposition camera
-- only allow "orbiting" in orbit controls, no zooming nor axial repositioning
+    - further reflect this differentiation on the ui player span glow
+
 - add a glow around winning row when win is detected
   - "play again" button
+
+- make threejs scene just overall more visible and pleasent to lay eyes on
 */
 import * as THREE from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
@@ -28,20 +30,19 @@ const camera = new THREE.PerspectiveCamera(
   45, // field of view
   rect.width / rect.height, // aspect ratio
   0.1, // near clipping plane
-  1000 // far clipping plane
+  100 // far clipping plane
 );
 camera.updateProjectionMatrix();
 
 // initialize orbit controls
 const orbit = new OrbitControls(camera, renderer.domElement);
+orbit.update();
+orbit.enableZoom = false;
+orbit.enablePan = false;
 
 // move camera
-camera.position.set(-10, 8, 0);
-orbit.update();
-
-// grid helper
-const gridHelper = new THREE.GridHelper();
-scene.add(gridHelper);
+camera.position.set(4, 4, 4);
+camera.lookAt(0, 0, 0);
 
 // add board
 const { board, balls } = createBoard();
@@ -96,3 +97,20 @@ window.addEventListener('mousemove', (event) => {
 });
 
 window.addEventListener('click', () => gameState = changeObject(hoveredObject));
+
+// let isDragging = false;
+
+// window.addEventListener('mousedown', () => {
+//   isDragging = true;
+// });
+
+// window.addEventListener('mouseup', () => {
+//   isDragging = false;
+// });
+
+// window.addEventListener('mousemove', (event) => {
+//   if (isDragging) {
+//     board.rotation.y += event.movementX * 0.005;
+//     board.rotation.x += event.movementY * 0.005;
+//   }
+// });

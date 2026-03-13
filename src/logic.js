@@ -64,9 +64,9 @@ function map(x, y, z) {
         map_x = 2;
     }
 
-    if (y == 2.5) {
+    if (y == 1) {
         map_y = 0;
-    } else if (y == 1.5) {
+    } else if (y == 0) {
         map_y = 1;
     } else {
         map_y = 2;
