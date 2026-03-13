@@ -5,6 +5,8 @@ aesthetics arc:
   - have them differentiate colors too
 - reposition camera
 - only allow "orbiting" in orbit controls, no zooming nor axial repositioning
+- add a glow around winning row when win is detected
+  - "play again" button
 */
 import * as THREE from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
