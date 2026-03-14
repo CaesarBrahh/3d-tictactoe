@@ -40,6 +40,72 @@ xPiece.add(bar2);
 
 pieces.x = xPiece;
 
+// define winning lines
+const winningLines = [
+  // x-axis
+  [{x:0,y:0,z:0},{x:1,y:0,z:0},{x:2,y:0,z:0}],
+  [{x:0,y:0,z:1},{x:1,y:0,z:1},{x:2,y:0,z:1}],
+  [{x:0,y:0,z:2},{x:1,y:0,z:2},{x:2,y:0,z:2}],
+  [{x:0,y:1,z:0},{x:1,y:1,z:0},{x:2,y:1,z:0}],
+  [{x:0,y:1,z:1},{x:1,y:1,z:1},{x:2,y:1,z:1}],
+  [{x:0,y:1,z:2},{x:1,y:1,z:2},{x:2,y:1,z:2}],
+  [{x:0,y:2,z:0},{x:1,y:2,z:0},{x:2,y:2,z:0}],
+  [{x:0,y:2,z:1},{x:1,y:2,z:1},{x:2,y:2,z:1}],
+  [{x:0,y:2,z:2},{x:1,y:2,z:2},{x:2,y:2,z:2}],
+
+  // y-axis
+  [{x:0,y:0,z:0},{x:0,y:1,z:0},{x:0,y:2,z:0}],
+  [{x:0,y:0,z:1},{x:0,y:1,z:1},{x:0,y:2,z:1}],
+  [{x:0,y:0,z:2},{x:0,y:1,z:2},{x:0,y:2,z:2}],
+  [{x:1,y:0,z:0},{x:1,y:1,z:0},{x:1,y:2,z:0}],
+  [{x:1,y:0,z:1},{x:1,y:1,z:1},{x:1,y:2,z:1}],
+  [{x:1,y:0,z:2},{x:1,y:1,z:2},{x:1,y:2,z:2}],
+  [{x:2,y:0,z:0},{x:2,y:1,z:0},{x:2,y:2,z:0}],
+  [{x:2,y:0,z:1},{x:2,y:1,z:1},{x:2,y:2,z:1}],
+  [{x:2,y:0,z:2},{x:2,y:1,z:2},{x:2,y:2,z:2}],
+
+  // z-axis
+  [{x:0,y:0,z:0},{x:0,y:0,z:1},{x:0,y:0,z:2}],
+  [{x:0,y:1,z:0},{x:0,y:1,z:1},{x:0,y:1,z:2}],
+  [{x:0,y:2,z:0},{x:0,y:2,z:1},{x:0,y:2,z:2}],
+  [{x:1,y:0,z:0},{x:1,y:0,z:1},{x:1,y:0,z:2}],
+  [{x:1,y:1,z:0},{x:1,y:1,z:1},{x:1,y:1,z:2}],
+  [{x:1,y:2,z:0},{x:1,y:2,z:1},{x:1,y:2,z:2}],
+  [{x:2,y:0,z:0},{x:2,y:0,z:1},{x:2,y:0,z:2}],
+  [{x:2,y:1,z:0},{x:2,y:1,z:1},{x:2,y:1,z:2}],
+  [{x:2,y:2,z:0},{x:2,y:2,z:1},{x:2,y:2,z:2}],
+
+  // diagonals in xy planes
+  [{x:0,y:0,z:0},{x:1,y:1,z:0},{x:2,y:2,z:0}],
+  [{x:0,y:2,z:0},{x:1,y:1,z:0},{x:2,y:0,z:0}],
+  [{x:0,y:0,z:1},{x:1,y:1,z:1},{x:2,y:2,z:1}],
+  [{x:0,y:2,z:1},{x:1,y:1,z:1},{x:2,y:0,z:1}],
+  [{x:0,y:0,z:2},{x:1,y:1,z:2},{x:2,y:2,z:2}],
+  [{x:0,y:2,z:2},{x:1,y:1,z:2},{x:2,y:0,z:2}],
+
+  // diagonals in xz planes
+  [{x:0,y:0,z:0},{x:1,y:0,z:1},{x:2,y:0,z:2}],
+  [{x:0,y:0,z:2},{x:1,y:0,z:1},{x:2,y:0,z:0}],
+  [{x:0,y:1,z:0},{x:1,y:1,z:1},{x:2,y:1,z:2}],
+  [{x:0,y:1,z:2},{x:1,y:1,z:1},{x:2,y:1,z:0}],
+  [{x:0,y:2,z:0},{x:1,y:2,z:1},{x:2,y:2,z:2}],
+  [{x:0,y:2,z:2},{x:1,y:2,z:1},{x:2,y:2,z:0}],
+
+  // diagonals in yz planes
+  [{x:0,y:0,z:0},{x:0,y:1,z:1},{x:0,y:2,z:2}],
+  [{x:0,y:0,z:2},{x:0,y:1,z:1},{x:0,y:2,z:0}],
+  [{x:1,y:0,z:0},{x:1,y:1,z:1},{x:1,y:2,z:2}],
+  [{x:1,y:0,z:2},{x:1,y:1,z:1},{x:1,y:2,z:0}],
+  [{x:2,y:0,z:0},{x:2,y:1,z:1},{x:2,y:2,z:2}],
+  [{x:2,y:0,z:2},{x:2,y:1,z:1},{x:2,y:2,z:0}],
+
+  // space diagonals
+  [{x:0,y:0,z:0},{x:1,y:1,z:1},{x:2,y:2,z:2}],
+  [{x:0,y:0,z:2},{x:1,y:1,z:1},{x:2,y:2,z:0}],
+  [{x:0,y:2,z:0},{x:1,y:1,z:1},{x:2,y:0,z:2}],
+  [{x:0,y:2,z:2},{x:1,y:1,z:1},{x:2,y:0,z:0}]
+];
+
 function highlightWinner(pieces) {
     if (pieceMatrix[pieces[0][0]][pieces[0][1]][pieces[0][2]].isGroup) {
         // first piece
@@ -69,6 +135,15 @@ function highlightWinner(pieces) {
 }
 
 function isWinner() {
+    for (let points of winningLines) {
+        if (boardMatrix[points[0].x][points[0].y][points[0].z] == boardMatrix[points[1].x][points[1].y][points[1].z] && boardMatrix[points[2].x][points[2].y][points[2].z] && boardMatrix[points[0].x][points[0].y][points[0].z] != null) {
+            highlightWinner([[points[0].x, points[0].y, points[0].z], [points[1].x, points[1].y, points[1].z], [points[2].x, points[2].y, points[2].z]]);
+            return true;
+        }
+    }
+}
+
+function issWinner() {
     for (let i = 0; i < 3; i++) {
         for (let j = 0; j < 3; j++) {
             // check z-axis
@@ -88,7 +163,7 @@ function isWinner() {
             }
         }
 
-        // check face diagonals
+        // check front-back diagonals
         if (boardMatrix[0][i][0] == boardMatrix[1][i][0] && boardMatrix[1][i][0] == boardMatrix[2][i][0] && boardMatrix[0][i][0] != null) { // top left to bottom right
             highlightWinner([[0, i, 0], [1, i, 0], [2, i, 0]]);
             return true;
@@ -97,6 +172,18 @@ function isWinner() {
             highlightWinner([[2, i, 0], [1, i, 0], [0, i, 0]]);
             return true;
         }
+
+        // check top-down diagonals
+        if (boardMatrix[i][0][0] == boardMatrix[1][i][1] && boardMatrix[1][i][1] == boardMatrix[2][i][2] && boardMatrix[i][0][0] != null) {
+            highlightWinner([[i, 0, 0], [i, 1, 1], [i, 2, 2]]);
+            return true;
+        }
+        if (boardMatrix[i][0][2] == boardMatrix[i][1][1] && boardMatrix[i][1][1] == boardMatrix[0][2][0] && boardMatrix[i][0][2] != null) {
+            highlightWinner([[i, 0, 2], [i, 1, 1], [i, 2, 0]]);
+            return true;
+        }
+
+        // check right-left diagonals
     }
 
     // check diagonals across the x
@@ -117,6 +204,8 @@ function isWinner() {
         return true;
     }
 
+    console.log(boardMatrix);
+    console.log(pieceMatrix);
     return false;
 }
 
@@ -133,7 +222,7 @@ function map(x, y, z) {
         map_x = 2;
     }
 
-    if (y == 1) {
+    if (y == -1) {
         map_y = 0;
     } else if (y == 0) {
         map_y = 1;

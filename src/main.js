@@ -1,11 +1,12 @@
 /*
 aesthetics arc:
-- apply missed isWinner() checks (12 missing)
-  - apply top-down and left-right diagonals
+- glow bug
 
 - mobile compatability
 
 tower arc:
+
+ai arc?:
 */
 import * as THREE from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
