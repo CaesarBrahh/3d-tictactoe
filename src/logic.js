@@ -5,6 +5,11 @@ let boardMatrix = [[[null, null, null], [null, null, null], [null, null, null]],
                     [[null, null, null], [null, null, null], [null, null, null]],
                     [[null, null, null], [null, null, null], [null, null, null]]];
 
+// build piece matrix
+let pieceMatrix = [[[null, null, null], [null, null, null], [null, null, null]],
+                    [[null, null, null], [null, null, null], [null, null, null]],
+                    [[null, null, null], [null, null, null], [null, null, null]]];                 
+
 // initialize player
 let player = 'X';
 document.getElementById("player").className = "player-x";
@@ -35,43 +40,80 @@ xPiece.add(bar2);
 
 pieces.x = xPiece;
 
+function highlightWinner(pieces) {
+    if (pieceMatrix[pieces[0][0]][pieces[0][1]][pieces[0][2]].isGroup) {
+        // first piece
+        pieceMatrix[pieces[0][0]][pieces[0][1]][pieces[0][2]].children.forEach(child => {
+            child.material.color.set(0xffe535);
+        });
+
+        // second piece
+        pieceMatrix[pieces[1][0]][pieces[1][1]][pieces[1][2]].children.forEach(child => {
+            child.material.color.set(0xffe535);
+        });
+
+        // third piece
+        pieceMatrix[pieces[2][0]][pieces[2][1]][pieces[2][2]].children.forEach(child => {
+            child.material.color.set(0xffe535);
+        });
+    } else {
+        // first piece
+        pieceMatrix[pieces[0][0]][pieces[0][1]][pieces[0][2]].material.color.set(0xffe535);
+
+        // // second piece
+        pieceMatrix[pieces[1][0]][pieces[1][1]][pieces[1][2]].material.color.set(0xffe535);
+
+        // // third piece
+        pieceMatrix[pieces[2][0]][pieces[2][1]][pieces[2][2]].material.color.set(0xffe535);
+    }
+}
+
 function isWinner() {
     for (let i = 0; i < 3; i++) {
         for (let j = 0; j < 3; j++) {
             // check z-axis
             if (boardMatrix[i][j][0] == boardMatrix[i][j][1] && boardMatrix[i][j][1] == boardMatrix[i][j][2] && boardMatrix[i][j][0] != null) {
+                highlightWinner([[i, j, 0], [i, j, 1], [i, j, 2]]);
                 return true;
             } 
             // check y-axis
             if (boardMatrix[i][0][j] == boardMatrix[i][1][j] && boardMatrix[i][1][j] == boardMatrix[i][2][j] && boardMatrix[i][0][j] != null) {
+                highlightWinner([[i, 0, j], [i, 1, j], [i, 2, j]]);
                 return true;
             }
             // check x-axis
             if (boardMatrix[0][i][j] == boardMatrix[1][i][j] && boardMatrix[1][i][j] == boardMatrix[2][i][j] && boardMatrix[0][i][j] != null) {
+                highlightWinner([[0, i, j], [1, i, j], [2, i, j]]);
                 return true;
             }
         }
 
         // check face diagonals
         if (boardMatrix[0][i][0] == boardMatrix[1][i][0] && boardMatrix[1][i][0] == boardMatrix[2][i][0] && boardMatrix[0][i][0] != null) { // top left to bottom right
+            highlightWinner([[0, i, 0], [1, i, 0], [2, i, 0]]);
             return true;
         }
         if (boardMatrix[2][i][0] == boardMatrix[1][i][0] && boardMatrix[1][i][0] == boardMatrix[0][i][0] && boardMatrix[2][i][0] != null) { // bottom left to top right
+            highlightWinner([[2, i, 0], [1, i, 0], [0, i, 0]]);
             return true;
         }
     }
 
     // check diagonals across the x
     if (boardMatrix[0][0][0] == boardMatrix[1][1][1] && boardMatrix[1][1][1] == boardMatrix[2][2][2] && boardMatrix[0][0][0] != null) {
+        highlightWinner([[0, 0, 0], [1, 1, 1], [2, 2, 2]]);
         return true;
     }
     if (boardMatrix[0][2][2] == boardMatrix[1][1][1] && boardMatrix[1][1][1] == boardMatrix[2][0][0] && boardMatrix[0][2][2] != null) {
+        highlightWinner([[0, 2, 2], [1, 1, 1], [2, 0, 0]]);
         return true;
     }
     if (boardMatrix[0][2][0] == boardMatrix[1][1][1] && boardMatrix[1][1][1] == boardMatrix[2][0][2] && boardMatrix[0][2][0] != null) {
+        highlightWinner([[0, 2, 0], [1, 1, 1], [2, 0, 2]]);
         return true;
     }
     if (boardMatrix[0][0][2] == boardMatrix[1][1][1] && boardMatrix[1][1][1] == boardMatrix[2][2][0] && boardMatrix[0][0][2] != null) {
+        highlightWinner([[0, 0, 2], [1, 1, 1], [2, 2, 0]]);
         return true;
     }
 
@@ -138,10 +180,14 @@ export function changeObject(obj, board) {
             // switch players
             let replacementPiece;
             if (player == 'X') {
-                replacementPiece = pieces.x.clone();               
+                replacementPiece = pieces.x.clone();
+                replacementPiece.children.forEach(child => {
+                    child.material = child.material.clone();
+                });               
                 player = 'O';
             } else {
                 replacementPiece = pieces.o.clone()
+                replacementPiece.material = replacementPiece.material.clone();
                 player = 'X';
             }
 
@@ -149,6 +195,7 @@ export function changeObject(obj, board) {
             replacementPiece.position.copy(obj.position);
             board.remove(obj);
             board.add(replacementPiece); 
+            pieceMatrix[map_x][map_y][map_z] = replacementPiece;
 
             // modify on-screen player display
             updatePlayerUI(player);
