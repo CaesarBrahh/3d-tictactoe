@@ -136,7 +136,7 @@ function highlightWinner(pieces) {
 
 function isWinner() {
     for (let points of winningLines) {
-        if (boardMatrix[points[0].x][points[0].y][points[0].z] == boardMatrix[points[1].x][points[1].y][points[1].z] && boardMatrix[points[2].x][points[2].y][points[2].z] && boardMatrix[points[0].x][points[0].y][points[0].z] != null) {
+        if (boardMatrix[points[0].x][points[0].y][points[0].z] == boardMatrix[points[1].x][points[1].y][points[1].z] && boardMatrix[points[1].x][points[1].y][points[1].z] == boardMatrix[points[2].x][points[2].y][points[2].z] && boardMatrix[points[0].x][points[0].y][points[0].z] != null) {
             highlightWinner([[points[0].x, points[0].y, points[0].z], [points[1].x, points[1].y, points[1].z], [points[2].x, points[2].y, points[2].z]]);
             return true;
         }
