@@ -1,6 +1,3 @@
-/*
-- fix player ui
-*/
 import * as THREE from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 import { createBoard, createStars } from '../tower-board.js';
