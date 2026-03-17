@@ -26,7 +26,7 @@ pieces.o_geometry = new THREE.TorusGeometry(0.4, 0.15, 16, 100);
 
 // X piece
 const bar1 = new THREE.Mesh(
-    new THREE.BoxGeometry(0.8, 0.15, 0.15),
+    new THREE.BoxGeometry(0.8, 0.16, 0.16),
     new THREE.MeshBasicMaterial({ color: 0xff0000 })
 );
 bar1.rotation.z = Math.PI / 4;
@@ -143,36 +143,27 @@ function isWinner() {
     }
 }
 
-function map(x, y, z) {
+function map(x, z) {
     let map_x = null;
-    let map_y = null;
     let map_z = null;
 
-    if (x == -1) {
+    if (x === -1) {
         map_x = 0;
-    } else if (x == 0) {
+    } else if (x === 0) {
         map_x = 1;
     } else {
         map_x = 2;
     }
 
-    if (y == -1) {
-        map_y = 0;
-    } else if (y == 0) {
-        map_y = 1;
-    } else {
-        map_y = 2;
-    }
-
-    if (z == -1) {
+    if (z === -1) {
         map_z = 0;
-    } else if (z == 0) {
+    } else if (z === 0) {
         map_z = 1;
     } else {
         map_z = 2;
     }
 
-    return { map_x, map_y, map_z };
+    return { map_x, map_z };
 }
 
 function updatePlayerUI(player) {
@@ -187,46 +178,74 @@ function updatePlayerUI(player) {
     }
 }
 
+function unmap(y) {
+    if (y === 0) {
+        return -1;
+    } else if (y === 1) {
+        return 0;
+    } else {
+        return 1;
+    }
+}
+
 export function changeObject(obj, board) {
     if (obj) {
-        // find board position
-        const { map_x, map_y, map_z } = map(obj.position.x, obj.position.y, obj.position.z);
+        // known positions
+        const { map_x, map_z } = map(obj.position.x, obj.position.z);
+        let map_y = null;
+        console.log("world:", obj.position.x, obj.position.z);
+        console.log("mapped:", map_x, map_z);
 
-        // only make changes if position is open
-        if (boardMatrix[map_x][map_y][map_z] == null) {
-            // change board matrix
+        // loop through that object to find lowest y, else do nothing
+        for (let y = 0; y < 3; y++) {
+            if (boardMatrix[map_x][y][map_z] == null) {
+                // set y
+                map_y = y;
+                break;
+            }
+        }
+
+        if (map_y != null) {
+            //change board matrix
             boardMatrix[map_x][map_y][map_z] = player;
 
-            // change geometry
-            obj.geometry.dispose();
-
-            // switch players
             let replacementPiece;
+            // change players
             if (player == 'X') {
+                player = 'O';
+
+                // add geometry
                 replacementPiece = pieces.x.clone();
                 replacementPiece.children.forEach(child => {
                     child.material = child.material.clone();
-                });               
-                player = 'O';
+                }); 
             } else {
+                player = 'X';
+
+                // add geometry
                 replacementPiece = pieces.o.clone();
                 replacementPiece.material = replacementPiece.material.clone();
-                player = 'X';
             }
 
             // replace piece
-            replacementPiece.position.copy(obj.position);
-            board.remove(obj);
+            replacementPiece.position.set(obj.position.x, unmap(map_y), obj.position.z);
             board.add(replacementPiece); 
             pieceMatrix[map_x][map_y][map_z] = replacementPiece;
-
-            // modify on-screen player display
-            updatePlayerUI(player);
         }
+
+        console.log("map_y:", map_y, "world y:", unmap(map_y));
+        for (let y = 0; y < 3; y++) {
+            console.log(boardMatrix[map_x][map_y][map_z]);
+        }
+        console.log(boardMatrix);
     }
+
     // check if winner
     return !isWinner();
 }
+
+// [x][y][z]
+// [[[ , , ]]]
 
 // restart
 document.getElementById("butt").addEventListener("click", () => {

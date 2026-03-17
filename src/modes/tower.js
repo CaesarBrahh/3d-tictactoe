@@ -1,13 +1,10 @@
 /*
-- clicking on pole puts piece on bottom
-- ensure logic works properly for finding winner n shit
-- sliding animation for placing piece on bottom of pole
-- remove orbit controls to just rotate the board around the y-axis
+- fix player ui
 */
 import * as THREE from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 import { createBoard, createStars } from '../tower-board.js';
-import { changeObject } from '../logic.js';
+import { changeObject } from '../tower-logic.js';
 
 export function startTower() {
 	// initialize renderer
@@ -48,6 +45,9 @@ export function startTower() {
   // add board
   const { board, poles } = createBoard();
   scene.add(board);
+
+  const gridhelper = new THREE.AxesHelper();
+  scene.add(gridhelper);
 
   // initialize raycaster and mouse
   const raycaster = new THREE.Raycaster();
@@ -96,4 +96,5 @@ export function startTower() {
     mouse.y = -((event.clientY - rect.top) / rect.height) * 2 + 1;
   });
 
+  window.addEventListener('click', () => gameState = changeObject(hoveredObject, board));
 }
