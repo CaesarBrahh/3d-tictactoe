@@ -78,6 +78,9 @@ export function startTower() {
       			hoveredObject = null;
       		}
       	}
+    } else {
+      document.getElementById("butt").style.display = "block";
+      document.getElementById("player-wrapper").style.display = "none";
     }
   }
   renderer.setPixelRatio(window.devicePixelRatio);
