@@ -231,21 +231,15 @@ export function changeObject(obj, board) {
             replacementPiece.position.set(obj.position.x, unmap(map_y), obj.position.z);
             board.add(replacementPiece); 
             pieceMatrix[map_x][map_y][map_z] = replacementPiece;
-        }
 
-        console.log("map_y:", map_y, "world y:", unmap(map_y));
-        for (let y = 0; y < 3; y++) {
-            console.log(boardMatrix[map_x][map_y][map_z]);
+            // modify on-screen player display
+            updatePlayerUI(player);
         }
-        console.log(boardMatrix);
     }
 
     // check if winner
     return !isWinner();
 }
-
-// [x][y][z]
-// [[[ , , ]]]
 
 // restart
 document.getElementById("butt").addEventListener("click", () => {

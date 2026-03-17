@@ -30,8 +30,8 @@ export function startTower() {
   // initialize orbit controls
   const orbit = new OrbitControls(camera, renderer.domElement);
   orbit.update();
-  //orbit.enableZoom = false;
-  //orbit.enablePan = false;
+  orbit.enableZoom = false;
+  orbit.enablePan = false;
 
   // move camera
   camera.position.set(4, 4, 4);
@@ -45,9 +45,6 @@ export function startTower() {
   // add board
   const { board, poles } = createBoard();
   scene.add(board);
-
-  const gridhelper = new THREE.AxesHelper();
-  scene.add(gridhelper);
 
   // initialize raycaster and mouse
   const raycaster = new THREE.Raycaster();
