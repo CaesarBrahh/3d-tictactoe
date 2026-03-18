@@ -1,10 +1,13 @@
 # 3D Tic-Tac Toe
 
-![Menu](assets/menu.png)
+<p align="center">
+  <img src="assets/menu.png" width="80%" />
+</p>
 
-![Classic](assets/classic.gif)
-
-![Tower](assets/tower.gif)
+<p align="center">
+  <img src="assets/classic.gif" width="45%" />
+  <img src="assets/tower.gif" width="45%" />
+</p>
 
 ---
 
