@@ -6,7 +6,7 @@
 
 ## Where to Play
 
-### Visit [3dtictactoe.caesarbrahh.dev](3dtictactoe.caesarbrahh.dev) to play online
+Visit [3dtictactoe.caesarbrahh.dev](3dtictactoe.caesarbrahh.dev) to play online
 
 ---
 
@@ -40,6 +40,20 @@
 ---
 
 ## Project Structure
+
+```
+src/
+├── main.js                # Entry point + mode selection
+├── style.css              # Global styling
+├── classic/
+│   ├── classic.js         # Classic 3D Tic-Tac-Toe engine
+│   ├── classic-board.js   # Classic board and object creation
+│   └── classic-logic.js   # Classic game rules and win detection
+├── tower/
+│   ├── tower.js           # Tower 3D Tic-Tac-Toe engine
+│   ├── tower-board.js     # Tower board and object creation
+│   └── tower-logic.js     # Tower game rules and win detection
+```
 
 ---
 
@@ -147,8 +161,10 @@ This gives:
 - Efficient updates
 - The ability to highlight winning lines
 
-boardMatrix -> game logic
+```
+boardMatrix -> game logic 
 pieceMatrix -> 3D objects
+```
 
 ### Win Detection
 
