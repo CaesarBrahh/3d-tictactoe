@@ -1,11 +1,11 @@
 /*
 aesthetics arc:
-- readme
+- rebuild structure
 - host on 3dtictactoe.caesarbrahh.dev
 - mobile compatability
 */
-import { startClassic } from './modes/classic.js';
-import { startTower } from './modes/tower.js';
+import { startClassic } from './classic/classic.js';
+import { startTower } from './tower/tower.js';
 
 const menu = document.getElementById('menu');
 const gameUI = document.getElementById('game-ui');

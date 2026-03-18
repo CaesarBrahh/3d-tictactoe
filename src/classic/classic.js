@@ -1,10 +1,10 @@
 import * as THREE from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
-import { createBoard, createStars } from '../tower-board.js';
-import { changeObject } from '../tower-logic.js';
+import { createBoard, createStars } from './classic-board.js';
+import { changeObject } from './classic-logic.js';
 
-export function startTower() {
-	// initialize renderer
+export function startClassic() {
+  // initialize renderer
   const canvas = document.querySelector('#board');
   const renderer = new THREE.WebGLRenderer({ 
     canvas: canvas, 
@@ -40,10 +40,10 @@ export function startTower() {
   scene.add(stars);
 
   // add board
-  const { board, poles } = createBoard();
+  const { board, balls } = createBoard();
   scene.add(board);
 
-  // initialize raycaster and mouse
+  // initialize raycaster
   const raycaster = new THREE.Raycaster();
   const mouse = new THREE.Vector2();
 
@@ -56,28 +56,32 @@ export function startTower() {
     // rotate stars and board
     stars.rotation.y += 0.0005;
 
+    // raycaster
     if (gameState) {
-    	raycaster.setFromCamera(mouse, camera);
-      	const intersects = raycaster.intersectObjects(poles);
+      raycaster.setFromCamera(mouse, camera);
+      const intersects = raycaster.intersectObjects(balls);
 
-      	if (intersects.length > 0) {
-      		const obj = intersects[0].object;
+      if (intersects.length > 0) {
+        const obj = intersects[0].object;
 
-      		if (hoveredObject !== obj) {
-      			if (hoveredObject) {
-      				hoveredObject.material.color.set(0xffffff);
-      			}
+        if (hoveredObject !== obj) {
+          // change hoveredObject back to base object
+          if (hoveredObject) {
+            hoveredObject.material.color.set(0xffffff);
+          }
 
-      			hoveredObject = obj;
-      		}
+          // change hoveredObject to current object
+          hoveredObject = obj;
+        } 
 
-      		hoveredObject.material.color.set(0x987ab4);
-      	} else {
-      		if (hoveredObject) {
-      			hoveredObject.material.color.set(0xffffff);
-      			hoveredObject = null;
-      		}
-      	}
+        // change color of hovered object
+        hoveredObject.material.color.set(0x987ab4);
+      } else {
+        if (hoveredObject) {
+          hoveredObject.material.color.set(0xffffff);
+          hoveredObject = null;
+        }
+      }
     } else {
       document.getElementById("butt").style.display = "block";
       document.getElementById("player-wrapper").style.display = "none";
