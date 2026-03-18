@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <!--<link rel="icon" type="image/svg+xml" href="/vite.svg" />-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>3D Tic-Tac-Toe</title>
+    <script type="module" crossorigin src="/assets/index-C-Mz1Vfq.js"></script>
+    <link rel="stylesheet" crossorigin href="/assets/index-BJSpQLUV.css">
+  </head>
+  <body>
+    <div id="menu" class="menu-overlay">
+      <div class="menu-card">
+        <h1>3D Tic-Tac-Toe</h1>
+        <p class="menu-subtitle">Choose game mode</p>
+
+        <div class="menu-actions">
+          <button id="classic-btn" class="menu-btn">Classic</button>
+          <button id="tower-btn" class="menu-btn">Tower</button>
+        </div>
+      </div>
+    </div>
+
+    <div id="game-ui" class="game-ui hidden">
+      <button id="menu-btn" class="menu-back">← Menu</button>
+
+      <h1 id="game-title">3D Tic-Tac-Toe</h1>
+
+      <div class="wrap">
+        <canvas id="board"></canvas>
+      </div>
+
+      <h3 id="player-wrapper">Player: <span id="player">X</span></h3>
+      <button id="butt">Play Again!</button>
+    </div>
+
+  </body>
+</html>
