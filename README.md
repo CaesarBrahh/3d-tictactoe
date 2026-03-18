@@ -1,6 +1,10 @@
 # 3D Tic-Tac Toe
 
-[gif previews]
+![Menu](assets/menu.png)
+
+![Classic](assets/classic.gif)
+
+![Tower](assets/tower.gif)
 
 ---
 
