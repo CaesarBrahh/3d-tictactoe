@@ -56,7 +56,7 @@ The game board is represented internally as a **3D matrix**: ```boardMatrix[x][y
 Each cell stores ```null``` when initialized, then ```'X'``` or ```'O'```
 
 **Full 3D cube visualization**:
-
+```
    y (height)
    ↑
    |
@@ -65,6 +65,7 @@ Each cell stores ```null``` when initialized, then ```'X'``` or ```'O'```
   /
  /
 z (depth)
+```
 
 ### Coordinate Mapping (World -> Grid)
 
@@ -95,6 +96,7 @@ const intersects = raycaster.intersectObjects(interactiveObjects);
 ```
 
 **Flow**:
+```
 Mouse Move
    ↓
 Convert to normalized coordinates
@@ -104,6 +106,7 @@ Raycast into scene
 Detect intersected object
    ↓
 Highlight or place piece
+```
 
 ### Piece Placement Logic (tower)
 
@@ -121,6 +124,7 @@ for (let y = 0; y < 3; y++) {
 ```
 
 **Stacking behavior**:
+```
 Column (x,z):
 
 y=2  [   ]
@@ -132,6 +136,7 @@ y=0  [ X ]
 y=2  [   ]
 y=1  [ O ]
 y=0  [ X ]
+```
 
 ### Scene Object Tracking
 
