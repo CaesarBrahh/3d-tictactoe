@@ -1,6 +1,5 @@
 /*
 aesthetics arc:
-- ui menu
 - readme
 - host on 3dtictactoe.caesarbrahh.dev
 - mobile compatability
