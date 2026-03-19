@@ -86,12 +86,25 @@ export function startTower() {
   renderer.setPixelRatio(window.devicePixelRatio);
   renderer.setAnimationLoop(animate);
 
-  window.addEventListener('mousemove', (event) => {
-    const rect = canvas.getBoundingClientRect();
-
-    mouse.x = ((event.clientX - rect.left) / rect.width) * 2 - 1;
-    mouse.y = -((event.clientY - rect.top) / rect.height) * 2 + 1;
+  window.addEventListener('pointermove', (event) => {
+    updatePointer(event.clientX, event.clientY);
   });
 
-  window.addEventListener('click', () => gameState = changeObject(hoveredObject, board));
+  window.addEventListener('pointerdown', (event) => {
+    updatePointer(event.clientX, event.clientY);
+
+    raycaster.setFromCamera(mouse, camera);
+    const intersects = raycaster.intersectObjects(poles);
+
+    if (intersects.length > 0) {
+      gameState = changeObject(hoveredObject, board);
+    }
+  });
+
+  function updatePointer(clientX, clientY) {
+    const rect = canvas.getBoundingClientRect();
+
+    mouse.x = ((clientX - rect.left) / rect.width) * 2 - 1;
+    mouse.y = -((clientY - rect.top) / rect.height) * 2 + 1;
+  }
 }

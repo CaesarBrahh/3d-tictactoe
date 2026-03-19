@@ -1,6 +1,5 @@
 /*
 aesthetics arc:
-- rebuild structure
 - host on 3dtictactoe.caesarbrahh.dev
 - mobile compatability
 */

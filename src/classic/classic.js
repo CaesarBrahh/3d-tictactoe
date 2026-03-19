@@ -90,12 +90,38 @@ export function startClassic() {
   renderer.setPixelRatio(window.devicePixelRatio);
   renderer.setAnimationLoop(animate);
 
-  window.addEventListener('mousemove', (event) => {
-    const rect = canvas.getBoundingClientRect();
-
-    mouse.x = ((event.clientX - rect.left) / rect.width) * 2 - 1;
-    mouse.y = -((event.clientY - rect.top) / rect.height) * 2 + 1;
+  window.addEventListener('pointermove', (event) => {
+    updatePointer(event.clientX, event.clientY);
   });
 
-  window.addEventListener('click', () => gameState = changeObject(hoveredObject, board));
+  let downX = 0;
+  let downY = 0;
+
+  window.addEventListener('pointerdown', (event) => {
+    downX = event.clientX;
+    downY = event.clientY;
+  });
+
+  window.addEventListener('pointerup', (event) => {
+    const dx = event.clientX - downX;
+    const dy = event.clientY - downY;
+
+    if (Math.hypot(dx, dy) < 10) {
+      updatePointer(event.clientX, event.clientY);
+
+      raycaster.setFromCamera(mouse, camera);
+      const intersects = raycaster.intersectObjects(balls);
+
+      if (intersects.length > 0) {
+        gameState = changeObject(intersects[0].object, board);
+      }
+    }
+  });
+
+  function updatePointer(clientX, clientY) {
+    const rect = canvas.getBoundingClientRect();
+
+    mouse.x = ((clientX - rect.left) / rect.width) * 2 - 1;
+    mouse.y = -((clientY - rect.top) / rect.height) * 2 + 1;
+  }
 }
