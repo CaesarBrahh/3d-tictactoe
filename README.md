@@ -11,12 +11,6 @@
 
 ---
 
-## Where to Play
-
-Visit [3dtictactoe.caesarbrahh.dev](3dtictactoe.caesarbrahh.dev) to play online
-
----
-
 ## Features
 
 - **3D Game Board** rendered with Three.js  
